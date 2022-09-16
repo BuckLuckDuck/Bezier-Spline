@@ -2,7 +2,6 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.MouseMotionAdapter;
 import java.awt.geom.Ellipse2D;
 import java.awt.geom.Point2D;
 import java.util.ArrayList;
@@ -15,10 +14,6 @@ public class BezierSpline {
 
     private static ArrayList<Ellipse2D.Double> ellipses;
 
-    private static int pointCount;
-
-    private static int pointCoursorDraw;
-
     private static boolean needToDrawSpline = false;
 
     private static double t = 0.0001;
@@ -27,7 +22,6 @@ public class BezierSpline {
 
         public Panel() {
             this.addMouseListener(new MouseAction());
-            this.addMouseMotionListener(new MouseMotion());
         }
 
         @Override
@@ -38,7 +32,7 @@ public class BezierSpline {
             graphics.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
             graphics.setColor(Color.BLACK);
 
-            pointCoursorDraw = 1;
+            int pointCoursorDraw = 1;
 
             for (Ellipse2D.Double ellips : ellipses) {
                 graphics.fill(ellips);
@@ -157,7 +151,6 @@ public class BezierSpline {
             public void mouseClicked(MouseEvent e) {
 
                 if (e.getButton() == MouseEvent.BUTTON1) {
-                    pointCount++;
 
                     double x = e.getX();
                     double y = e.getY();
@@ -177,13 +170,6 @@ public class BezierSpline {
 
             }
         }
-
-        class MouseMotion extends MouseMotionAdapter {
-            @Override
-            public void mouseDragged(MouseEvent e) {
-
-            }
-        }
     }
 
     public BezierSpline() {
@@ -193,8 +179,8 @@ public class BezierSpline {
         f.setSize(WIDTH, HEIGHT);
         f.setLocationRelativeTo(null);
 
-        points = new ArrayList<Point2D>();
-        ellipses = new ArrayList<Ellipse2D.Double>();
+        points = new ArrayList<>();
+        ellipses = new ArrayList<>();
 
         Panel panel = new Panel();
         panel.setPreferredSize(new Dimension(WIDTH, HEIGHT));
